@@ -41,7 +41,7 @@ const useAuthCall = () => {
       // console.log(data);
       dispatch(loginSuccess(data));
       toastSuccessNotify("You have successfully logged in");
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       // console.log(error);
       dispatch(fetchFail());
