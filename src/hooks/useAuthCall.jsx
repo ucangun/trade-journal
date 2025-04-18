@@ -4,6 +4,7 @@ import {
   fetchStart,
   loginSuccess,
   logoutSuccess,
+  registerSuccess,
 } from "../features/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,7 @@ const useAuthCall = () => {
     try {
       await axiosPublic.post("auth/signup", userInfo);
       // console.log(data);
+      dispatch(registerSuccess());
       toastSuccessNotify("You have successfully registered");
       navigate("/signin");
     } catch (error) {
