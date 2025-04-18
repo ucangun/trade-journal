@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import CallToAction from "../components/Home/CallToAction";
 import Features from "../components/Home/Features";
 import Hero from "../components/Home/Hero";
@@ -10,6 +11,7 @@ const Home = () => {
       <Features />
       <Testimonials />
       <CallToAction />
+      <Footer />
     </>
   );
 };
