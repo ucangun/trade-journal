@@ -10,7 +10,7 @@ const PrivateRouter = () => {
   useEffect(() => {
     if (!currentUser) {
       toastErrorNotify("You must be logged in to access this page.");
-      navigate("/login");
+      navigate("/signin");
     }
   }, [currentUser, navigate]);
 
