@@ -8,6 +8,9 @@ const stockSlice = createSlice({
     stock: null,
     loading: false,
     error: false,
+    isModalOpen: false,
+    isUpdateModalOpen: false,
+    selectedStock: null,
   },
   reducers: {
     fetchStart: (state) => {
@@ -27,10 +30,13 @@ const stockSlice = createSlice({
     createStockSuccess: (state) => {
       state.loading = false;
       state.error = false;
+      state.isModalOpen = false;
     },
     updateStockSuccess: (state) => {
       state.loading = false;
       state.error = false;
+      state.isUpdateModalOpen = false;
+      state.selectedStock = null;
     },
     deleteStockSuccess: (state) => {
       state.loading = false;
@@ -39,6 +45,20 @@ const stockSlice = createSlice({
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
+    },
+    openModal: (state) => {
+      state.isModalOpen = true;
+    },
+    closeModal: (state) => {
+      state.isModalOpen = false;
+    },
+    openUpdateModal: (state, { payload }) => {
+      state.isUpdateModalOpen = true;
+      state.selectedStock = payload;
+    },
+    closeUpdateModal: (state) => {
+      state.isUpdateModalOpen = false;
+      state.selectedStock = null;
     },
   },
 });
@@ -51,5 +71,9 @@ export const {
   updateStockSuccess,
   deleteStockSuccess,
   fetchFail,
+  openModal,
+  closeModal,
+  openUpdateModal,
+  closeUpdateModal,
 } = stockSlice.actions;
 export default stockSlice.reducer;

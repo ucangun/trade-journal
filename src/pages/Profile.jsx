@@ -1,6 +1,9 @@
 import Navbar from "../components/Navbar";
 import WelcomeCard from "../components/Profile/WelcomeCard";
 import DepositModal from "../components/Profile/DepositModal";
+import StocksList from "../components/Profile/StocksList";
+import AddStockModal from "../components/Profile/AddStockModal";
+import UpdateStockModal from "../components/Profile/UpdateStockModal";
 
 const Profile = () => {
   return (
@@ -8,7 +11,12 @@ const Profile = () => {
       <Navbar />
       <main className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <WelcomeCard />
+        <StocksList />
+
+        {/* Modals */}
         <DepositModal />
+        <AddStockModal />
+        <UpdateStockModal />
       </main>
     </div>
   );

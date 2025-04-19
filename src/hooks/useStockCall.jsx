@@ -47,9 +47,10 @@ const useStockCall = () => {
   const createStock = async (stockInfo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken.post("stocks", stockInfo);
-      dispatch(createStockSuccess(data.data));
+      await axiosWithToken.post("stocks", stockInfo);
+      dispatch(createStockSuccess());
       toastSuccessNotify("Stock created successfully");
+      getStocks();
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
@@ -62,9 +63,10 @@ const useStockCall = () => {
   const updateStock = async (id, stockInfo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken.put(`stocks/${id}`, stockInfo);
-      dispatch(updateStockSuccess(data.data));
+      await axiosWithToken.put(`stocks/${id}`, stockInfo);
+      dispatch(updateStockSuccess());
       toastSuccessNotify("Stock updated successfully");
+      getStocks();
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
@@ -78,8 +80,9 @@ const useStockCall = () => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.delete(`stocks/${id}`);
-      dispatch(deleteStockSuccess(id));
+      dispatch(deleteStockSuccess());
       toastSuccessNotify("Stock deleted successfully");
+      getStocks();
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
