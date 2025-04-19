@@ -8,6 +8,7 @@ const capitalDepositSlice = createSlice({
     capitalDeposit: null,
     loading: false,
     error: false,
+    isModalOpen: false,
   },
   reducers: {
     fetchStart: (state) => {
@@ -27,8 +28,8 @@ const capitalDepositSlice = createSlice({
     createCapitalDepositSuccess: (state) => {
       state.loading = false;
       state.error = false;
+      state.isModalOpen = false;
     },
-
     deleteCapitalDepositSuccess: (state) => {
       state.loading = false;
       state.error = false;
@@ -36,6 +37,12 @@ const capitalDepositSlice = createSlice({
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
+    },
+    openModal: (state) => {
+      state.isModalOpen = true;
+    },
+    closeModal: (state) => {
+      state.isModalOpen = false;
     },
   },
 });
@@ -47,5 +54,7 @@ export const {
   createCapitalDepositSuccess,
   deleteCapitalDepositSuccess,
   fetchFail,
+  openModal,
+  closeModal,
 } = capitalDepositSlice.actions;
 export default capitalDepositSlice.reducer;

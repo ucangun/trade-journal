@@ -51,8 +51,9 @@ const useCapitalDepositCall = () => {
         "capital-deposits",
         depositInfo
       );
-      dispatch(createCapitalDepositSuccess(data.data));
+      dispatch(createCapitalDepositSuccess());
       toastSuccessNotify("Capital deposit created successfully");
+      return data.data;
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
