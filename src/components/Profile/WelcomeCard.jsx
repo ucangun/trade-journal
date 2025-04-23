@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { FiDollarSign } from "react-icons/fi";
+import { FaEuroSign } from "react-icons/fa";
 import { openModal } from "../../features/capitalDepositSlice";
 
 const WelcomeCard = () => {
@@ -27,7 +28,7 @@ const WelcomeCard = () => {
             onClick={handleOpenModal}
             className="flex items-center px-4 py-2 bg-[#e6edf5] text-[#041737] rounded-md hover:bg-[#ccdaeb] transition-colors"
           >
-            <FiDollarSign className="mr-2" />
+            <FaEuroSign className="mr-2" />
             Deposit
           </button>
         </div>

@@ -69,13 +69,11 @@ const useTransactionCall = () => {
       await axiosWithToken.put(`transactions/${id}`, transactionInfo);
       dispatch(updateTransactionSuccess());
       toastSuccessNotify("Transaction updated successfully");
-      return true;
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
         error.response?.data?.message || "Failed to update transaction."
       );
-      return false;
     }
   };
 
@@ -85,13 +83,28 @@ const useTransactionCall = () => {
       await axiosWithToken.delete(`transactions/${id}`);
       dispatch(deleteTransactionSuccess());
       toastSuccessNotify("Transaction deleted successfully");
-      return true;
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
         error.response?.data?.message || "Failed to delete transaction."
       );
-      return false;
+    }
+  };
+
+  const getTransactionsByStock = async (stockId) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithToken.get(
+        `transactions?stockId=${stockId}`
+      );
+      dispatch(getTransactionsSuccess(data.data));
+      return data.data;
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify(
+        error.message || "Error fetching transactions for this stock"
+      );
+      return [];
     }
   };
 
@@ -101,6 +114,7 @@ const useTransactionCall = () => {
     createTransaction,
     updateTransaction,
     deleteTransaction,
+    getTransactionsByStock,
   };
 };
 

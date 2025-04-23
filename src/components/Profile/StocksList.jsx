@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiPlusCircle, FiEdit2 } from "react-icons/fi";
 import { AiOutlineTransaction } from "react-icons/ai";
+import { FcStatistics } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import useStockCall from "../../hooks/useStockCall";
 import { openModal, openUpdateModal } from "../../features/stockSlice";
 import { openTransactionModal } from "../../features/transactionSlice";
@@ -9,6 +11,7 @@ import { format } from "date-fns";
 
 const StocksList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { stocks, loading } = useSelector((state) => state.stock);
   const { getStocks } = useStockCall();
 
@@ -26,7 +29,6 @@ const StocksList = () => {
 
   const handleTradingClick = (stock) => {
     dispatch(openTransactionModal(stock));
-    // console.log("Trading for stock:", stock.symbol);
   };
 
   if (loading) {
@@ -83,11 +85,11 @@ const StocksList = () => {
                     <FiEdit2 className="w-5 h-5" />
                   </button>
                   <button
-                    onClick={() => handleTradingClick(stock)}
-                    className="p-1 text-[#47DE30] rounded hover:bg-[#edfce8]"
-                    title="Trading"
+                    onClick={() => navigate(`/stocks/${stock._id}`)}
+                    className="p-1 text-[#47DE30] rounded hover:bg-[#e6edf5]"
+                    title="Stock Details"
                   >
-                    <AiOutlineTransaction className="w-5 h-5" />
+                    <FcStatistics className="w-5 h-5" />
                   </button>
                 </div>
               </div>

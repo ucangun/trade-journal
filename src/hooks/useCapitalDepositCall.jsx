@@ -7,12 +7,16 @@ import {
   createCapitalDepositSuccess,
   deleteCapitalDepositSuccess,
 } from "../features/capitalDepositSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
+import useUserCall from "./useUserCall";
 
 const useCapitalDepositCall = () => {
   const dispatch = useDispatch();
   const axiosWithToken = useAxios();
+  const { currentUser } = useSelector((state) => state.auth);
+
+  const { getSingleUser } = useUserCall();
 
   // Get all capital deposits
   const getCapitalDeposits = async () => {
@@ -59,6 +63,8 @@ const useCapitalDepositCall = () => {
       toastErrorNotify(
         error.response?.data?.message || "Failed to create capital deposit."
       );
+    } finally {
+      getSingleUser(currentUser.id);
     }
   };
 

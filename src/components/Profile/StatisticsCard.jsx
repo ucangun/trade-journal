@@ -21,7 +21,7 @@ const StatisticsCard = () => {
     }
   }, [currentUser]);
 
-  const totalDeposits = singleUser?.totalCapital;
+  const totalDeposits = singleUser?.totalCapital.toLocaleString("de-DE");
 
   const activePositions = stocks?.filter((stock) => stock.isOpen)?.length || 0;
 
