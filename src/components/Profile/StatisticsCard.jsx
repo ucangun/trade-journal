@@ -8,10 +8,9 @@ import {
 
 const StatisticsCard = () => {
   const { stocks } = useSelector((state) => state.stock);
-  const { capitalDeposits } = useSelector((state) => state.capitalDeposit);
+  const { currentUser } = useSelector((state) => state.auth);
 
-  const totalDeposits =
-    capitalDeposits?.reduce((total, deposit) => total + deposit.amount, 0) || 0;
+  const totalDeposits = currentUser?.totalCapital;
 
   const activePositions = stocks?.filter((stock) => stock.isOpen)?.length || 0;
 
@@ -33,7 +32,9 @@ const StatisticsCard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Deposits</p>
-              <p className="text-2xl font-bold text-[#161616]">$ 1000</p>
+              <p className="text-2xl font-bold text-[#161616]">
+                € {totalDeposits}
+              </p>
             </div>
             <div className="flex items-center justify-center w-12 h-12 bg-[#e6edf5] rounded-full">
               <FiDollarSign className="w-6 h-6 text-[#041737]" />
