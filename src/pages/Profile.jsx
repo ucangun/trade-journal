@@ -6,6 +6,7 @@ import AddStockModal from "../components/Profile/AddStockModal";
 import UpdateStockModal from "../components/Profile/UpdateStockModal";
 import StatisticsCard from "../components/Profile/StatisticsCard";
 import TransactionModal from "../components/Profile/TransactionModal";
+import TransactionList from "../components/Profile/TransactionList";
 
 const Profile = () => {
   return (
@@ -15,6 +16,7 @@ const Profile = () => {
         <WelcomeCard />
         <StatisticsCard />
         <StocksList />
+        <TransactionList />
 
         {/* Modals */}
         <DepositModal />
