@@ -5,6 +5,7 @@ import StocksList from "../components/Profile/StocksList";
 import AddStockModal from "../components/Profile/AddStockModal";
 import UpdateStockModal from "../components/Profile/UpdateStockModal";
 import StatisticsCard from "../components/Profile/StatisticsCard";
+import TransactionModal from "../components/Profile/TransactionModal";
 
 const Profile = () => {
   return (
@@ -19,6 +20,7 @@ const Profile = () => {
         <DepositModal />
         <AddStockModal />
         <UpdateStockModal />
+        <TransactionModal />
       </main>
     </div>
   );

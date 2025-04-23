@@ -4,6 +4,7 @@ import { FiPlusCircle, FiEdit2 } from "react-icons/fi";
 import { AiOutlineTransaction } from "react-icons/ai";
 import useStockCall from "../../hooks/useStockCall";
 import { openModal, openUpdateModal } from "../../features/stockSlice";
+import { openTransactionModal } from "../../features/transactionSlice";
 import { format } from "date-fns";
 
 const StocksList = () => {
@@ -24,7 +25,8 @@ const StocksList = () => {
   };
 
   const handleTradingClick = (stock) => {
-    console.log("Trading for stock:", stock.symbol);
+    dispatch(openTransactionModal(stock));
+    // console.log("Trading for stock:", stock.symbol);
   };
 
   if (loading) {
