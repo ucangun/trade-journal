@@ -1,17 +1,19 @@
-"use client";
-
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import useStockCall from "../hooks/useStockCall";
 import useTransactionCall from "../hooks/useTransactionCall";
-import { useSelector } from "react-redux";
 import { FiArrowLeft, FiCalendar, FiBarChart2, FiClock } from "react-icons/fi";
 import { FaEuroSign } from "react-icons/fa";
+import { AiOutlineTransaction } from "react-icons/ai";
 import { formatDate, getPositionDuration } from "../helpers/dateFormater";
+import { openTransactionModal } from "../features/transactionSlice";
+import TransactionModal from "../components/Profile/TransactionModal";
 
 const StockDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { getStock } = useStockCall();
   const { getTransactionsByStock } = useTransactionCall();
   const { stock, loading } = useSelector((state) => state.stock);
@@ -26,6 +28,12 @@ const StockDetail = () => {
 
   const goBack = () => {
     navigate(-1);
+  };
+
+  const handleTradeClick = () => {
+    if (stock && stock.isOpen) {
+      dispatch(openTransactionModal(stock));
+    }
   };
 
   if (loading) {
@@ -74,7 +82,7 @@ const StockDetail = () => {
             </h1>
           </div>
 
-          <div className="mt-4 md:mt-0">
+          <div className="flex items-center mt-4 space-x-3 md:mt-0">
             <div
               className={`inline-flex items-center px-4 py-2 rounded-full ${
                 stock.isOpen
@@ -85,6 +93,16 @@ const StockDetail = () => {
               <FiClock className="mr-2" />
               {stock.isOpen ? "Open Position" : "Closed Position"}
             </div>
+
+            {stock.isOpen && (
+              <button
+                onClick={handleTradeClick}
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[#041737] rounded-md hover:bg-[#0F2743] transition-colors"
+              >
+                <AiOutlineTransaction className="w-4 h-4 mr-2" />
+                Trade
+              </button>
+            )}
           </div>
         </div>
 
@@ -288,6 +306,8 @@ const StockDetail = () => {
           )}
         </div>
       </div>
+
+      <TransactionModal />
     </div>
   );
 };
