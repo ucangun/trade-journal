@@ -3,6 +3,7 @@ import authReducer from "../features/authSlice";
 import stockReducer from "../features/stockSlice";
 import capitalDepositReducer from "../features/capitalDepositSlice";
 import transactionReducer from "../features/transactionSlice";
+import userReducer from "../features/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     stock: stockReducer,
     capitalDeposit: capitalDepositReducer,
     transaction: transactionReducer,
+    user: userReducer,
   },
 });
 

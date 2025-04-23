@@ -8,12 +8,15 @@ import {
   updateTransactionSuccess,
   deleteTransactionSuccess,
 } from "../features/transactionSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
+import useUserCall from "./useUserCall";
 
 const useTransactionCall = () => {
   const dispatch = useDispatch();
   const axiosWithToken = useAxios();
+  const { getSingleUser } = useUserCall();
+  const { currentUser } = useSelector((state) => state.auth);
 
   const getTransactions = async (stockId) => {
     dispatch(fetchStart());
@@ -49,13 +52,14 @@ const useTransactionCall = () => {
       await axiosWithToken.post("transactions", transactionInfo);
       dispatch(createTransactionSuccess());
       toastSuccessNotify("Transaction created successfully");
-      return true;
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
         error.response?.data?.message || "Failed to create transaction."
       );
-      return false;
+    } finally {
+      getTransactions();
+      getSingleUser(currentUser.id);
     }
   };
 

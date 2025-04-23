@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   FiDollarSign,
@@ -5,12 +6,22 @@ import {
   FiBarChart2,
   FiActivity,
 } from "react-icons/fi";
+import useUserCall from "../../hooks/useUserCall";
 
 const StatisticsCard = () => {
   const { stocks } = useSelector((state) => state.stock);
   const { currentUser } = useSelector((state) => state.auth);
+  const { singleUser } = useSelector((state) => state.user);
 
-  const totalDeposits = currentUser?.totalCapital;
+  const { getSingleUser } = useUserCall();
+
+  useEffect(() => {
+    if (currentUser && currentUser.id) {
+      getSingleUser(currentUser?.id);
+    }
+  }, [currentUser]);
+
+  const totalDeposits = singleUser?.totalCapital;
 
   const activePositions = stocks?.filter((stock) => stock.isOpen)?.length || 0;
 
