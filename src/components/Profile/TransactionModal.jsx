@@ -10,7 +10,7 @@ const TransactionModal = () => {
     transactionType: "BUY",
     quantity: "",
     price: "",
-    transactionDate: new Date().toISOString().split("T")[0],
+    transactionDate: new Date().toISOString(),
     comment: "",
   };
 

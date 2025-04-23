@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { FiFilter, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import useTransactionCall from "../../hooks/useTransactionCall";
 import { format } from "date-fns";
+import { formatDate } from "../../helpers/dateFormater";
 
 const TransactionList = () => {
   const [selectedStock, setSelectedStock] = useState("all");
@@ -212,12 +213,7 @@ const TransactionList = () => {
                       <div>
                         <span className="text-gray-500">Date: </span>
                         <span className="text-gray-900">
-                          {transaction.transactionDate
-                            ? format(
-                                new Date(transaction.transactionDate),
-                                "dd/MM/yyyy"
-                              )
-                            : "N/A"}
+                          {formatDate(transaction.transactionDate)}
                         </span>
                       </div>
                     </div>
