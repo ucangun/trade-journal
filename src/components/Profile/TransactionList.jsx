@@ -104,7 +104,7 @@ const TransactionList = () => {
         </div>
       ) : (
         <div className="overflow-hidden bg-white rounded-lg shadow-md">
-          <div className="hidden border-b border-gray-200 md:flex bg-gray-50">
+          <div className="sticky top-0 hidden border-b border-gray-200 md:flex bg-gray-50">
             <div className="w-1/6 px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
               Stock
             </div>
@@ -125,7 +125,7 @@ const TransactionList = () => {
             </div>
           </div>
 
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-200 max-h-[400px] overflow-y-auto">
             {transactions.map((transaction) => {
               const stock = stocks.find((s) => s._id === transaction.stockId);
               const stockSymbol = stock ? stock.symbol : "Unknown";

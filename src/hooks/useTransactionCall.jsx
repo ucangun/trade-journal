@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
 import useUserCall from "./useUserCall";
 import useStockCall from "./useStockCall";
+import useCapitalDepositCall from "./useCapitalDepositCall";
 
 const useTransactionCall = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const useTransactionCall = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const { getSingleUser } = useUserCall();
   const { getStocks, getStock } = useStockCall();
+  const { getCapitalDeposits } = useCapitalDepositCall();
 
   const getTransactions = async (stockId) => {
     dispatch(fetchStart());
@@ -66,6 +68,7 @@ const useTransactionCall = () => {
       getTransactionsByStock(transactionInfo.stockId);
       getStock(transactionInfo.stockId);
       getStocks();
+      getCapitalDeposits();
     }
   };
 
