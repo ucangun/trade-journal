@@ -12,12 +12,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
 import useUserCall from "./useUserCall";
+import useStockCall from "./useStockCall";
 
 const useTransactionCall = () => {
   const dispatch = useDispatch();
   const axiosWithToken = useAxios();
-  const { getSingleUser } = useUserCall();
   const { currentUser } = useSelector((state) => state.auth);
+  const { getSingleUser } = useUserCall();
+  const { getStocks, getStock } = useStockCall();
 
   const getTransactions = async (stockId) => {
     dispatch(fetchStart());
@@ -61,6 +63,9 @@ const useTransactionCall = () => {
     } finally {
       getTransactions();
       getSingleUser(currentUser.id);
+      getTransactionsByStock(transactionInfo.stockId);
+      getStock(transactionInfo.stockId);
+      getStocks();
     }
   };
 
