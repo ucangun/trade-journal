@@ -7,6 +7,7 @@ import {
   createTransactionSuccess,
   updateTransactionSuccess,
   deleteTransactionSuccess,
+  getStockTransactionsSuccess,
 } from "../features/transactionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
@@ -91,20 +92,19 @@ const useTransactionCall = () => {
     }
   };
 
+  // Get transactions by stock ID
   const getTransactionsByStock = async (stockId) => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosWithToken.get(
         `transactions?stockId=${stockId}`
       );
-      dispatch(getTransactionsSuccess(data.data));
-      return data.data;
+      dispatch(getStockTransactionsSuccess(data.data));
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify(
         error.message || "Error fetching transactions for this stock"
       );
-      return [];
     }
   };
 

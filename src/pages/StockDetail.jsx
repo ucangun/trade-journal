@@ -17,7 +17,7 @@ const StockDetail = () => {
   const { getStock } = useStockCall();
   const { getTransactionsByStock } = useTransactionCall();
   const { stock, loading } = useSelector((state) => state.stock);
-  const { transactions, loading: transactionsLoading } = useSelector(
+  const { stockTransactions, loading: transactionsLoading } = useSelector(
     (state) => state.transaction
   );
 
@@ -214,7 +214,7 @@ const StockDetail = () => {
             <div className="flex items-center justify-center h-40">
               <div className="w-8 h-8 border-b-2 rounded-full animate-spin border-[#041737]"></div>
             </div>
-          ) : transactions && transactions.length > 0 ? (
+          ) : stockTransactions && stockTransactions.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -258,7 +258,7 @@ const StockDetail = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {transactions.map((transaction) => (
+                  {stockTransactions.map((transaction) => (
                     <tr key={transaction._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span

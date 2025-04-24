@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  transactions: [],
+  transaction: null,
+  stockTransactions: [],
+  loading: false,
+  error: false,
+  isTransactionModalOpen: false,
+  selectedStock: null,
+};
+
 const transactionSlice = createSlice({
   name: "transaction",
-
-  initialState: {
-    transactions: [],
-    transaction: null,
-    loading: false,
-    error: false,
-    isTransactionModalOpen: false,
-    selectedStock: null,
-  },
+  initialState,
   reducers: {
     fetchStart: (state) => {
       state.loading = true;
@@ -24,6 +26,11 @@ const transactionSlice = createSlice({
     getTransactionSuccess: (state, { payload }) => {
       state.loading = false;
       state.transaction = payload;
+      state.error = false;
+    },
+    getStockTransactionsSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.stockTransactions = payload;
       state.error = false;
     },
     createTransactionSuccess: (state) => {
@@ -58,6 +65,7 @@ export const {
   fetchStart,
   getTransactionsSuccess,
   getTransactionSuccess,
+  getStockTransactionsSuccess,
   createTransactionSuccess,
   updateTransactionSuccess,
   deleteTransactionSuccess,
@@ -65,4 +73,5 @@ export const {
   openTransactionModal,
   closeTransactionModal,
 } = transactionSlice.actions;
+
 export default transactionSlice.reducer;
