@@ -7,6 +7,8 @@ import {
   createStockSuccess,
   updateStockSuccess,
   deleteStockSuccess,
+  closedStocksSuccess,
+  openStocksSuccess,
 } from "../features/stockSlice";
 import { useDispatch } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
@@ -91,12 +93,38 @@ const useStockCall = () => {
     }
   };
 
+  // Get open stocks
+  const getOpenStocks = async () => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithToken.get(`stocks/open`);
+      dispatch(openStocksSuccess(data.data));
+      return data.data;
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify(error.message || "Error fetching open stocks");
+    }
+  };
+
+  // Get closed stocks
+  const getClosedStocks = async () => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithToken.get(`stocks/close`);
+      dispatch(closedStocksSuccess(data.data));
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify(error.message || "Error fetching closed stocks");
+    }
+  };
   return {
     getStocks,
     getStock,
     createStock,
     updateStock,
     deleteStock,
+    getOpenStocks,
+    getClosedStocks,
   };
 };
 
