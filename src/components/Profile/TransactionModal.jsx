@@ -10,7 +10,7 @@ const TransactionModal = () => {
     transactionType: "BUY",
     quantity: "",
     price: "",
-    transactionDate: new Date().toISOString(),
+    transactionDate: new Date(),
     comment: "",
   };
 
@@ -125,7 +125,7 @@ const TransactionModal = () => {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <span className="text-gray-500">$</span>
+                <span className="text-gray-500">€</span>
               </div>
               <input
                 type="number"
@@ -145,10 +145,10 @@ const TransactionModal = () => {
               htmlFor="transactionDate"
               className="block mb-1 text-sm font-medium text-gray-700"
             >
-              Transaction Date
+              Transaction Date and Time
             </label>
             <input
-              type="date"
+              type="datetime-local"
               id="transactionDate"
               name="transactionDate"
               value={formData.transactionDate}

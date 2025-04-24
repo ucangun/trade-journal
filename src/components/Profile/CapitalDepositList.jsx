@@ -10,7 +10,6 @@ const CapitalDepositList = () => {
   const { getCapitalDeposits } = useCapitalDepositCall();
 
   useEffect(() => {
-    // Fetch capital deposits when component mounts
     if (typeof getCapitalDeposits === "function") {
       getCapitalDeposits();
     }
@@ -81,7 +80,7 @@ const CapitalDepositList = () => {
                   </div>
                   <div className="w-1/5 px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      ${deposit.amount.toFixed(2)}
+                      €{deposit.amount.toFixed(2)}
                     </div>
                   </div>
                   <div className="w-2/5 px-6 py-4">
@@ -105,7 +104,7 @@ const CapitalDepositList = () => {
                       {getTypeLabel(deposit.type)}
                     </div>
                     <div className="text-sm font-medium text-gray-900">
-                      ${deposit.amount.toFixed(2)}
+                      €{deposit.amount.toFixed(2)}
                     </div>
                   </div>
                   <div className="mb-2 text-sm text-gray-700">

@@ -1,20 +1,15 @@
 import { NavLink } from "react-router-dom";
-import { FiUser, FiSettings, FiHelpCircle, FiLogOut } from "react-icons/fi";
+import { FiUser, FiTrendingUp, FiLogOut } from "react-icons/fi";
+
 import useAuthCall from "../../hooks/useAuthCall";
 
 // Navigation items
-const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Features", to: "/features" },
-  { label: "Pricing", to: "/pricing" },
-  { label: "Testimonials", to: "/testimonials" },
-];
+const navItems = [{ label: "Home", to: "/" }];
 
 // User menu items
 const userMenuItems = [
   { label: "Profile", to: "/profile", icon: FiUser },
-  { label: "Settings", to: "/settings", icon: FiSettings },
-  { label: "Help", to: "/help", icon: FiHelpCircle },
+  { label: "Stocks", to: "/all-stocks", icon: FiTrendingUp },
 ];
 
 const MobileMenu = ({ isOpen, currentUser, onClose }) => {

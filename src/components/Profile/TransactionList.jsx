@@ -157,12 +157,12 @@ const TransactionList = () => {
                     </div>
                     <div className="w-1/6 px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        ${transaction.price.toFixed(2)}
+                        €{transaction.price.toFixed(2)}
                       </div>
                     </div>
                     <div className="w-1/6 px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        ${total.toFixed(2)}
+                        €{total.toFixed(2)}
                       </div>
                     </div>
                     <div className="w-1/6 px-6 py-4 whitespace-nowrap">
@@ -201,13 +201,13 @@ const TransactionList = () => {
                       <div>
                         <span className="text-gray-500">Price: </span>
                         <span className="text-gray-900">
-                          ${transaction.price.toFixed(2)}
+                          €{transaction.price.toFixed(2)}
                         </span>
                       </div>
                       <div>
                         <span className="text-gray-500">Total: </span>
                         <span className="text-gray-900">
-                          ${total.toFixed(2)}
+                          €{total.toFixed(2)}
                         </span>
                       </div>
                       <div>

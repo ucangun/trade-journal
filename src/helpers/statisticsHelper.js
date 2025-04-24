@@ -1,13 +1,12 @@
 import {
-  FiDollarSign,
   FiTrendingUp,
   FiBarChart2,
   FiActivity,
   FiCheckCircle,
-  FiClock,
   FiPercent,
   FiDivide,
 } from "react-icons/fi";
+import { TbCurrencyEuro } from "react-icons/tb";
 
 export const calculatePortfolioStatistics = (data) => {
   const { stocks, singleUser } = data;
@@ -68,34 +67,13 @@ export const calculatePortfolioStatistics = (data) => {
   const avgProfitLoss =
     stocks?.length > 0 ? (totalProfitLoss / stocks.length).toFixed(2) : 0;
 
-  // Average Holding Period
-  const calculateHoldingDays = (stock) => {
-    if (!stock.openDate) return 0;
-
-    const openDate = new Date(stock.openDate);
-    const closeDate = stock.isOpen
-      ? new Date()
-      : new Date(stock.closeDate || stock.updatedAt);
-
-    const diffTime = Math.abs(closeDate - openDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    return diffDays;
-  };
-
-  const totalHoldingDays =
-    stocks?.reduce((sum, stock) => sum + calculateHoldingDays(stock), 0) || 0;
-
-  const avgHoldingPeriod =
-    stocks?.length > 0 ? Math.round(totalHoldingDays / stocks.length) : 0;
-
   // Statistics cards array
   return [
     {
       id: "portfolio-value",
       title: "Portfolio Value",
       value: `€ ${portfolioValue}`,
-      icon: FiDollarSign,
+      icon: TbCurrencyEuro,
       color: "text-[#161616]",
       bgColor: "bg-[#e6edf5]",
       iconColor: "text-[#041737]",
@@ -159,15 +137,6 @@ export const calculatePortfolioStatistics = (data) => {
       ).toLocaleString()}€`,
       icon: FiPercent,
       color: avgProfitLoss >= 0 ? "text-[#47DE30]" : "text-red-500",
-      bgColor: "bg-[#e6edf5]",
-      iconColor: "text-[#041737]",
-    },
-    {
-      id: "avg-holding-period",
-      title: "Avg Holding Period",
-      value: `${avgHoldingPeriod} ${avgHoldingPeriod === 1 ? "day" : "days"}`,
-      icon: FiClock,
-      color: "text-[#161616]",
       bgColor: "bg-[#e6edf5]",
       iconColor: "text-[#041737]",
     },
