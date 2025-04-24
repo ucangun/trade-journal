@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import { FiDollarSign } from "react-icons/fi";
 import { FaEuroSign } from "react-icons/fa";
 import { openModal } from "../../features/capitalDepositSlice";
 
@@ -16,7 +15,7 @@ const WelcomeCard = () => {
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-2xl font-bold text-[#161616]">
-            Welcome back,{" "}
+            Welcome ,{" "}
             {currentUser?.firstName + " " + currentUser?.lastName || "User"}!
           </h2>
           <p className="mt-1 text-gray-600">
