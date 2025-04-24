@@ -1,6 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FiPlusCircle, FiEdit2, FiList } from "react-icons/fi";
+import {
+  FiPlusCircle,
+  FiEdit2,
+  FiList,
+  FiFilter,
+  FiChevronDown,
+  FiChevronUp,
+} from "react-icons/fi";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { FcStatistics } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +16,28 @@ import { openModal, openUpdateModal } from "../../features/stockSlice";
 import { openTransactionModal } from "../../features/transactionSlice";
 import { formatDate } from "../../helpers/dateFormater";
 
-// Added isLimited prop - default is true
 const StocksList = ({ isLimited = true }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { stocks, loading } = useSelector((state) => state.stock);
-  const { getStocks } = useStockCall();
+  const [filterType, setFilterType] = useState("all");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { stocks, openStocks, closedStocks, loading } = useSelector(
+    (state) => state.stock
+  );
+  const { getStocks, getOpenStocks, getClosedStocks } = useStockCall();
 
   useEffect(() => {
-    getStocks();
-  }, []);
+    if (!stocks.length) {
+      getStocks();
+    }
+
+    if (filterType === "open") {
+      getOpenStocks();
+    } else if (filterType === "closed") {
+      getClosedStocks();
+    }
+  }, [filterType]);
 
   const handleAddClick = () => {
     dispatch(openModal());
@@ -46,8 +65,19 @@ const StocksList = ({ isLimited = true }) => {
     );
   }
 
+  const getFilteredStocks = () => {
+    if (filterType === "all") return stocks;
+    if (filterType === "open") return openStocks;
+    if (filterType === "closed") return closedStocks;
+    return stocks;
+  };
+
+  const filteredStocks = getFilteredStocks();
+
   // Determine which stocks to display
-  const displayedStocks = isLimited ? stocks.slice(0, 3) : stocks;
+  const displayedStocks = isLimited
+    ? filteredStocks.slice(0, 3)
+    : filteredStocks;
 
   // Always show "See All Stocks" button when isLimited is true
   const showSeeAllButton = isLimited;
@@ -56,9 +86,79 @@ const StocksList = ({ isLimited = true }) => {
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-[#161616]">
-          {isLimited ? "Your Stocks" : "All Stocks"}
+          {isLimited ? "Your Stocks" : `Stocks (${filteredStocks.length})`}
         </h3>
         <div className="flex space-x-2">
+          {/* Filter dropdown*/}
+          <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center justify-between px-4 py-2 text-sm font-medium text-[#161616] bg-[#e6edf5] rounded-md hover:bg-[#ccdaeb] transition-colors"
+            >
+              <div className="flex items-center">
+                <FiFilter className="w-4 h-4 mr-2" />
+                <span className="text-sm">
+                  {filterType === "all"
+                    ? "All"
+                    : filterType === "open"
+                    ? "Open"
+                    : "Closed"}
+                </span>
+              </div>
+              {isDropdownOpen ? (
+                <FiChevronUp className="w-4 h-4 ml-2" />
+              ) : (
+                <FiChevronDown className="w-4 h-4 ml-2" />
+              )}
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute right-0 z-10 w-40 mt-2 bg-white border rounded-md shadow-lg">
+                <ul className="py-1">
+                  <li>
+                    <button
+                      onClick={() => {
+                        setFilterType("all");
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
+                        filterType === "all" ? "bg-gray-100 font-medium" : ""
+                      }`}
+                    >
+                      All Stocks
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setFilterType("open");
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
+                        filterType === "open" ? "bg-gray-100 font-medium" : ""
+                      }`}
+                    >
+                      Open Positions
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setFilterType("closed");
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
+                        filterType === "closed" ? "bg-gray-100 font-medium" : ""
+                      }`}
+                    >
+                      Closed Positions
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
           {showSeeAllButton && (
             <button
               onClick={handleSeeAllClick}
@@ -78,7 +178,7 @@ const StocksList = ({ isLimited = true }) => {
         </div>
       </div>
 
-      {stocks.length === 0 ? (
+      {displayedStocks.length === 0 ? (
         <div className="p-6 text-center bg-white rounded-lg shadow-md">
           <p className="text-gray-500">You haven't added any stocks yet.</p>
           <button
