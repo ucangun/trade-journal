@@ -6,9 +6,9 @@ import {
   getStockSuccess,
   createStockSuccess,
   updateStockSuccess,
-  deleteStockSuccess,
   closedStocksSuccess,
   openStocksSuccess,
+  updateStockNotesSuccess,
 } from "../features/stockSlice";
 import { useDispatch } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
@@ -77,19 +77,18 @@ const useStockCall = () => {
     }
   };
 
-  // Delete stock
-  const deleteStock = async (id) => {
+  // Add stock notes
+  const addStockNotes = async (id, notes) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.delete(`stocks/${id}`);
-      dispatch(deleteStockSuccess());
-      toastSuccessNotify("Stock deleted successfully");
-      getStocks();
+      await axiosWithToken.put(`stocks/${id}`, { notes });
+      dispatch(updateStockNotesSuccess({ id, notes }));
+      toastSuccessNotify("Notes saved successfully");
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify(
-        error.response?.data?.message || "Failed to delete stock."
-      );
+      toastErrorNotify(error.response?.data?.message || "Failed to save notes");
+    } finally {
+      getStock(id);
     }
   };
 
@@ -122,7 +121,7 @@ const useStockCall = () => {
     getStock,
     createStock,
     updateStock,
-    deleteStock,
+    addStockNotes,
     getOpenStocks,
     getClosedStocks,
   };

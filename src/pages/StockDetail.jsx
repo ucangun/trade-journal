@@ -9,6 +9,7 @@ import { AiOutlineTransaction } from "react-icons/ai";
 import { formatDate, getPositionDuration } from "../helpers/dateFormater";
 import { openTransactionModal } from "../features/transactionSlice";
 import TransactionModal from "../components/Profile/TransactionModal";
+import TradeNotes from "../components/StockDetail/TradeNotes";
 
 const StockDetail = () => {
   const { id } = useParams();
@@ -305,6 +306,10 @@ const StockDetail = () => {
             </div>
           )}
         </div>
+
+        {!stock.isOpen && (
+          <TradeNotes stockId={stock._id} initialNotes={stock.notes || ""} />
+        )}
       </div>
 
       <TransactionModal />

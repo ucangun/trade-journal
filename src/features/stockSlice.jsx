@@ -50,10 +50,6 @@ const stockSlice = createSlice({
       state.isUpdateModalOpen = false;
       state.selectedStock = null;
     },
-    deleteStockSuccess: (state) => {
-      state.loading = false;
-      state.error = false;
-    },
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
@@ -72,6 +68,10 @@ const stockSlice = createSlice({
       state.isUpdateModalOpen = false;
       state.selectedStock = null;
     },
+    updateStockNotesSuccess: (state) => {
+      state.loading = false;
+      state.error = false;
+    },
   },
 });
 
@@ -89,5 +89,6 @@ export const {
   closeUpdateModal,
   openStocksSuccess,
   closedStocksSuccess,
+  updateStockNotesSuccess,
 } = stockSlice.actions;
 export default stockSlice.reducer;
