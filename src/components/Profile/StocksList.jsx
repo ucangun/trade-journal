@@ -21,6 +21,7 @@ const StocksList = ({ isLimited = true }) => {
   const navigate = useNavigate();
   const [filterType, setFilterType] = useState("all");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { currentUser } = useSelector((state) => state.auth);
 
   const { stocks, openStocks, closedStocks, loading } = useSelector(
     (state) => state.stock
@@ -28,16 +29,14 @@ const StocksList = ({ isLimited = true }) => {
   const { getStocks, getOpenStocks, getClosedStocks } = useStockCall();
 
   useEffect(() => {
-    if (!stocks.length) {
-      getStocks();
-    }
+    getStocks();
 
     if (filterType === "open") {
       getOpenStocks();
     } else if (filterType === "closed") {
       getClosedStocks();
     }
-  }, [filterType]);
+  }, [filterType, currentUser?.id]);
 
   const handleAddClick = () => {
     dispatch(openModal());

@@ -6,6 +6,7 @@ import {
   logoutSuccess,
   registerSuccess,
 } from "../features/authSlice";
+import { resetStock } from "../features/stockSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/toastNotify";
@@ -66,6 +67,8 @@ const useAuthCall = () => {
       toastErrorNotify(
         error.response?.data?.message || "Logout failed. Please try again."
       );
+    } finally {
+      dispatch(resetStock());
     }
   };
 

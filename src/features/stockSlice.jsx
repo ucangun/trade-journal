@@ -72,6 +72,17 @@ const stockSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
+    resetStock: (state) => {
+      state.stocks = [];
+      state.stock = null;
+      state.openStocks = [];
+      state.closedStocks = [];
+      state.loading = false;
+      state.error = false;
+      state.isModalOpen = false;
+      state.isUpdateModalOpen = false;
+      state.selectedStock = null;
+    },
   },
 });
 
@@ -90,5 +101,6 @@ export const {
   openStocksSuccess,
   closedStocksSuccess,
   updateStockNotesSuccess,
+  resetStock,
 } = stockSlice.actions;
 export default stockSlice.reducer;
